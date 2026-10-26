@@ -1,0 +1,29 @@
+{
+  "weights": [
+    -4.890621946489645,
+    1.6643640844715504,
+    1.1227545260316776,
+    0.3730018661245744,
+    3.9812906687919725
+  ],
+  "feature_schema": [
+    "bias",
+    "central_contrast",
+    "variance",
+    "bright_fraction",
+    "max_3x3_contrast"
+  ],
+  "train_family": "train",
+  "train_seeds": [
+    0,
+    1599
+  ],
+  "threshold": 0.5,
+  "format_version": 1,
+  "temperature": 0.5,
+  "validation_family": "validation",
+  "validation_seeds": [
+    3000,
+    3199
+  ]
+}

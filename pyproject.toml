@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "aeromapper-ai"
+version = "1.0.0"
+requires-python = ">=3.11"
+description = "Synthetic visual survey planning research laboratory"
+[tool.setuptools.packages.find]
+include = ["aeromapper*"]

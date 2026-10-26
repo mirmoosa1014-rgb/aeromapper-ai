@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "checks": [
+    "saved replay loads",
+    "replay seek",
+    "truth toggle",
+    "policy switches",
+    "3D pointer rotation",
+    "new paired API mission",
+    "JSON export",
+    "desktop and mobile screenshots"
+  ],
+  "pageErrors": []
+}
