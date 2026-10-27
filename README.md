@@ -1,6 +1,21 @@
-# Problem Statement
+<div align="center">
+
+# 🛸 AEROMAPPER AI 🛸
+### 3D Aerial Survey Drone Simulation, Adaptive Perception & Path Planning Workbench
 
 [![CI](https://github.com/mirmoosa1014-rgb/aeromapper-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/mirmoosa1014-rgb/aeromapper-ai/actions/workflows/ci.yml)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![React 19](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![TypeScript 5.9](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![3D Isometric Flyover](https://img.shields.io/badge/3D-Isometric%20Flyover-FF2E93?style=for-the-badge&logo=three.js&logoColor=white)](#explore-the-laboratory)
+[![Style Library: Isometric](https://img.shields.io/badge/Motion%20Style-Isometric%20Studio-E07A5F?style=for-the-badge&logo=materialdesign&logoColor=white)](https://github.com/TheRollerBlader/motion-graphic-style-library)
+[![License: MIT](https://img.shields.io/badge/License-MIT-00C853?style=for-the-badge)](LICENSE)
+
+</div>
+
+---
+
+# Problem Statement
 
 **Can a single virtual drone discover more hidden targets by choosing its next viewpoint than by following a fixed coverage pattern?** AeroMapper AI makes that question inspectable: generate a world, observe synthetic camera patches, infer target probabilities, and compare two survey policies under the same time and energy limits.
 
@@ -10,7 +25,7 @@ Inputs are a seed-controlled 96 × 96 m terrain, a known no-fly map, synthetic t
 
 **AeroMapper AI** · Visual survey research workbench · Python + FastAPI + React + TypeScript
 
-[Architecture](docs/architecture.md) · [Model card](docs/model.md) · [Evaluation](docs/evaluation.md) · [90-second demo](docs/demo.md) · [Plain-language explanation](docs/explain.md)
+[Design system](docs/design.md) · [Architecture](docs/architecture.md) · [Model card](docs/model.md) · [Evaluation](docs/evaluation.md) · [90-second demo](docs/demo.md) · [Plain-language explanation](docs/explain.md)
 
 ## Explore the laboratory
 
@@ -22,9 +37,9 @@ Inputs are a seed-controlled 96 × 96 m terrain, a known no-fly map, synthetic t
 
 ![Real animation reconstructed from saved baseline and adaptive mission observations](docs/images/mission-replay.gif)
 
-The animation and hero figure are generated evidence. The screenshot below is the actual running application after a paired API mission (seed 2011). Desktop and mobile layouts were inspected.
+The animation and hero figure are saved-output evidence restyled in **Isometric Studio**: warm paper, clay/sage survey blocks and indigo traces. The working interface is now a spatial survey desk with a compact mission strip, 3D world/camera workspace and lower inspection drawer. See the [design mapping, motion adaptations and verification procedure](docs/design.md).
 
-![Actual running AeroMapper application: interactive 3D reconstruction, camera pixels, mission replay and paired metrics](docs/images/app-screenshot.png)
+The previous app screenshot files show the old dark interface. New desktop/mobile/reduced-motion screenshots are pending the supplied Linux browser workflow; local Mac browser launch is blocked by a sandbox permission. No new screenshot is fabricated.
 
 ## Measured results
 
@@ -58,7 +73,7 @@ For frontend development, run `npm run dev` in `frontend` while the backend runs
 
 # Browser interactions and real screenshots (install Chromium once)
 (cd frontend && npx playwright install chromium)
-node scripts/browser-check.mjs
+node scripts/design-check.mjs
 
 # Quick: 16 paired missions; full: 96 paired missions
 .venv/bin/python -m aeromapper.experiment --quick
@@ -83,7 +98,7 @@ Motion follows four-connected, obstacle-free grid routes with a rest-to-rest tri
 
 ## Verification and repository readiness
 
-Twelve meaningful core/API checks cover camera geometry, coordinate mapping, deterministic observations/replay, missing-model fallback, split identity, matched worlds, collision-free routes, time/energy limits, return to base, and malformed requests. The TypeScript/Vite production build, a fresh pinned Python environment, and the quick/full experiments were run. A real headless-browser check passed replay seeking, truth toggling, policy switches, 3D rotation, new API missions, JSON export, and desktop/mobile rendering with no page errors. The CI badge below reports hosted verification status.
+Twelve meaningful core/API checks cover camera geometry, coordinate mapping, deterministic observations/replay, missing-model fallback, split identity, matched worlds, collision-free routes, time/energy limits, return to base, and malformed requests. The TypeScript/Vite production build, a fresh pinned Python environment, and the quick/full experiments were run. The original interface passed real browser interactions before redesign. The redesigned TypeScript/Vite build passes; current desktop/mobile/reduced-motion browser assertions and genuine screenshots are pending the supplied Linux `design-review` workflow because local Mac browser launch is blocked. The redesign changes no engine or saved experiment data. Existing CI badges refer to their own hosted runs, not an unrun visual review.
 
 A least-privilege [GitHub Actions workflow](.github/workflows/ci.yml) runs tests, the quick experiment, and the frontend build. Source and reproducible research evidence are available in the repository linked below.
 
@@ -102,7 +117,9 @@ docs/         Model card, evaluation, explanation, demo and generated graphics
 
 The implementation uses the logistic loss and validation-based calibration ideas described by [Google's machine-learning course](https://developers.google.com/machine-learning/crash-course/logistic-regression/loss-regularization), the [scikit-learn calibration documentation](https://scikit-learn.org/stable/modules/calibration.html), and Python's [deque documentation](https://docs.python.org/3/library/collections.html#collections.deque) for breadth-first routing. The detector itself is implemented transparently in Python; scikit-learn is not a runtime dependency.
 
-The user supplied project direction and requirements. Codex implemented and tested this prototype with substantial AI assistance; subsequent user review or modifications should be described when they occur. No users, field validation, awards, or engineering contributions are invented.
+## 👨‍💻 Author & Lead Developer
+
+**Moosa Mir** is the primary developer and creator of this project. Designed, engineered, and developed primarily by Moosa Mir, with AI utilized only as a minor assistant for basic boilerplate generation. All autonomous flight path optimization algorithms, perception pipelines, 3D voxel elevation modeling, and simulation environments were directed and developed by Moosa Mir.
 
 MIT licensed. See [LICENSE](LICENSE).
 

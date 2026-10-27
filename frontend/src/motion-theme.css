@@ -1,0 +1,35 @@
+/* motionstyle_isometric — Isometric Studio */
+:root {
+  --bg: #E6E1D8;
+  --bg-raised: #F7F4EF;
+  --surface: #F4EFE6;
+  --ink: #2B2A28;
+  --text: #2B2A28;
+  --text-dim: #6E675F;
+  --primary: #E07A5F;
+  --primary-light: #F0A48F;
+  --primary-dark: #C45B42;
+  --secondary: #3D405B;
+  --accent: #81B29A;
+  --danger: #C44536;
+  --ok: #81B29A;
+  --info: #3D5A80;
+  --sand: #F2CC8F;
+  --clay: #E07A5F;
+  --sage: #81B29A;
+  --radius: 14px;
+  --border-width: 0px;
+  --border-color: #2B2A28;
+  --shadow: 0 18px 30px rgba(40, 36, 30, 0.16);
+  --blur: 0px;
+  --font-display: Helvetica Neue, Helvetica, Arial, sans-serif;
+  --font-body: Helvetica Neue, Helvetica, Arial, sans-serif;
+  --font-mono: SF Mono, ui-monospace, Menlo, Consolas, monospace;
+  --stagger: 0.08s;
+  --duration-block-y: 0.5s;
+  --ease-block-y: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-block-scale: 0.5s;
+  --ease-block-scale: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-idle-bob: 3.6s;
+  --ease-idle-bob: cubic-bezier(0.65, 0, 0.35, 1);
+}

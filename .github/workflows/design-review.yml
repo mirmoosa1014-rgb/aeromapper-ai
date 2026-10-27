@@ -1,0 +1,41 @@
+name: Isometric design review
+on:
+  push:
+    branches: ['design/**']
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'frontend/**'
+      - 'scripts/design-check.mjs'
+      - '.github/workflows/design-review.yml'
+permissions:
+  contents: read
+jobs:
+  desktop-mobile-reduced-motion:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install locked presentation dependencies
+        run: npm ci
+        working-directory: frontend
+      - name: Install matching Linux Chromium
+        run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - name: Typecheck and build
+        run: npm run build
+        working-directory: frontend
+      - name: Verify frozen-data interactions and capture screenshots
+        run: node scripts/design-check.mjs
+      - name: Upload genuine screenshots and verification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aeromapper-isometric-desktop-mobile-reduced-motion
+          path: artifacts/design/
+          if-no-files-found: warn

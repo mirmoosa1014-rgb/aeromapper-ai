@@ -9,3 +9,9 @@ Explicit limits: known static no-fly map, one-cell default camera sampling, inac
 No GitHub repositories created, commits made, or pushes performed. Publication requires user confirmation. This Linux directory has not been transferred back to the disconnected Mac Coding Projects folder.
 
 Final checks: 12 core/API tests passed in a fresh pinned .venv; TypeScript/Vite production build passed; quick 16-mission and full 96-mission experiments completed; genuine generated 3D research graphic and replay GIF inspected; browser checks passed. CI configured, not run remotely.
+
+## Isometric Studio redesign
+
+The presentation was redesigned as a paper spatial survey desk using the exported Isometric Studio theme at revision ab7faf2be3e17350f5c6c7e78dfb53d1792ae9cc. Exact decorative clips are confined to header geometry; measured terrain, trace and values never bob or count up. Actual data geometry and camera samples remain functional. Saved-output plots were recolored without inference or data writes. See design.md and THIRD_PARTY_NOTICES.md.
+
+The redesigned TypeScript/Vite build passes locally. Local Mac browsers are blocked by Mach-rendezvous permissions, so redesign screenshot/interaction checks remain pending the supplied Linux design-review workflow. Historical screenshots still depict the previous layout. No backend, model or experiment data was changed, and no training/benchmark was rerun.
