@@ -33,3 +33,7 @@ class Invariants(unittest.TestCase):
  def test_invalid(self):
   for b in [0,601]:
    with self.assertRaises(ValueError):run(budget=b)
+ def test_invalid_seed_and_family(self):
+  for seed in [None,True,1.5,-1,100001]:
+   with self.subTest(seed=seed),self.assertRaises(ValueError):run(seed=seed)
+  with self.assertRaises(ValueError):run(family='typo')

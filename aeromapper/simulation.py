@@ -34,6 +34,8 @@ def leg_cost(path):
  duration=len(path)*2*math.sqrt(CELL/MAX_ACCEL)
  return duration,.7*duration+len(path)*CELL*.06
 def run(seed=2000,policy='adaptive',budget=220.,family='test'):
+ if type(seed)!=int or not 0<=seed<=100000:raise ValueError('Seed must be an integer from 0 to 100000')
+ if family not in ['train','validation','test','ood']:raise ValueError('Unknown world family')
  if policy not in ['adaptive','lawnmower']:raise ValueError('Unknown policy')
  if not 40<=budget<=600:raise ValueError('Budget must be 40–600 seconds')
  start=time.perf_counter();w=world(seed,family);pos=(0,0);seen=set();blocked=set(w['obstacles']);belief={};trace=[];elapsed=energy=length=0.;unsafe=0;last_frame=[]
