@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel,Field
 from .simulation import run
 app=FastAPI(title='AeroMapper AI · synthetic survey lab')
-app.add_middleware(CORSMiddleware,allow_origins=['http://127.0.0.1:5105'],allow_methods=['GET','POST'],allow_headers=['Content-Type'])
+app.add_middleware(CORSMiddleware,allow_origins=['http://127.0.0.1:5105','http://localhost:5105','http://localhost:8105'],allow_methods=['GET','POST'],allow_headers=['Content-Type'])
 class Mission(BaseModel):
  seed:int=Field(default=2000,ge=0,le=100000)
  budget:float=Field(default=220,ge=40,le=600)
