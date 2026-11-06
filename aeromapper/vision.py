@@ -17,12 +17,16 @@ def features(a):
  flat=[v for row in a for v in row];mean=sum(flat)/len(flat);core=[a[y][x] for y in range(3,9) for x in range(3,9)]
  return [1.,sum(core)/len(core)-mean,sum((v-mean)**2 for v in flat),sum(v>mean+.22 for v in flat)/144,max(sum(a[y][x] for y in range(j,j+3) for x in range(i,i+3))/9 for j in range(10) for i in range(10))-mean]
 def sigmoid(x):return 1/(1+math.exp(-max(-30,min(30,x))))
+def load_model():
+ try:
+  model=json.loads(MODEL.read_text())
+  if len(model['weights'])!=5 or not all(math.isfinite(w) for w in model['weights']) or not math.isfinite(model.get('temperature',1)) or model.get('temperature',1)<=0:raise ValueError('Invalid model schema')
+  return model
+ except (OSError,ValueError,TypeError,KeyError):return None
 def predict(a,model=None):
  if model is None:
-  try:
-   model=json.loads(MODEL.read_text())
-   if len(model['weights'])!=5 or not all(math.isfinite(w) for w in model['weights']) or not math.isfinite(model.get('temperature',1)) or model.get('temperature',1)<=0:raise ValueError('Invalid model schema')
-  except (OSError,ValueError,TypeError,KeyError):return template(a)
+  model=load_model()
+  if model is None:return template(a)
  f=features(a)
  return sigmoid(sum(w*x for w,x in zip(model['weights'],f))/model.get('temperature',1.))
 def template(a):

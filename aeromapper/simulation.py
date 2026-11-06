@@ -1,7 +1,7 @@
 """Bounded survey simulator. Static no-fly cells known; targets stay sensor-private."""
 import math,random,time
 from collections import deque
-from .vision import patch,predict
+from .vision import patch,predict,load_model,template
 N=12;CELL=8.;MAX_SPEED=8.;MAX_ACCEL=2.;ALT=12.;FOV=60.
 def footprint(altitude=ALT):return 2*altitude*math.tan(math.radians(FOV/2))
 def world(seed,family='test'):
@@ -38,6 +38,7 @@ def run(seed=2000,policy='adaptive',budget=220.,family='test'):
  if family not in ['train','validation','test','ood']:raise ValueError('Unknown world family')
  if policy not in ['adaptive','lawnmower']:raise ValueError('Unknown policy')
  if not 40<=budget<=600:raise ValueError('Budget must be 40–600 seconds')
+ model=load_model()
  start=time.perf_counter();w=world(seed,family);pos=(0,0);seen=set();blocked=set(w['obstacles']);belief={};trace=[];elapsed=energy=length=0.;unsafe=0;last_frame=[]
  def observe():
   nonlocal last_frame
@@ -45,7 +46,7 @@ def run(seed=2000,policy='adaptive',budget=220.,family='test'):
   for c in cells_visible(pos):
    seen.add(c)
    if c in w['obstacles']:continue
-   visibility=.35 if c[0]>7 and c[1]>5 else .9;frame=patch(seed*10000+c[1]*N+c[0],c in w['targets'],family,size=1+(c[0]+c[1])%3,noise=.1 if family!='ood' else .19,visibility=visibility);p=predict(frame);belief[c]=p;obs.append({'x':c[0],'y':c[1],'confidence':p});last_frame=frame
+   visibility=.35 if c[0]>7 and c[1]>5 else .9;frame=patch(seed*10000+c[1]*N+c[0],c in w['targets'],family,size=1+(c[0]+c[1])%3,noise=.1 if family!='ood' else .19,visibility=visibility);p=predict(frame,model) if model is not None else template(frame);belief[c]=p;obs.append({'x':c[0],'y':c[1],'confidence':p});last_frame=frame
   return obs
  def record(rationale,observations,heading=0):trace.append({'step':len(trace),'time_s':elapsed,'energy_proxy':energy,'position':list(pos),'heading_rad':heading,'coverage':len(seen)/(N*N),'belief':[[x,y,p] for (x,y),p in belief.items()],'observations':observations,'rationale':rationale,'camera':last_frame})
  record('Initial camera observation',observe())
@@ -62,4 +63,4 @@ def run(seed=2000,policy='adaptive',budget=220.,family='test'):
  for waypoint in home:
   heading=math.atan2(waypoint[1]-pos[1],waypoint[0]-pos[0]);elapsed+=leg_cost([waypoint])[0];energy+=leg_cost([waypoint])[1];length+=CELL;pos=waypoint;record('Return to base on obstacle-free reserved route',observe(),heading)
  detected={c for c,p in belief.items() if p>=.5};tp=len(detected&w['targets']);fp=len(detected-w['targets']);metrics={'policy':policy,'seed':seed,'family':family,'coverage':len(seen)/(N*N),'recall':tp/len(w['targets']),'precision':tp/max(1,len(detected)),'false_discoveries':fp,'path_m':length,'time_s':elapsed,'energy_proxy':energy,'blocked_proposals':unsafe,'runtime_ms':(time.perf_counter()-start)*1000,'targets':len(w['targets']),'detected':tp,'budget_s':budget,'returned_to_base':pos==(0,0)}
- return {'metrics':metrics,'trace':trace,'terrain':w['height'],'obstacles':[list(c) for c in sorted(w['obstacles'])],'targets':[list(c) for c in sorted(w['targets'])],'footprint_m':footprint(),'cell_m':CELL,'model':'trained logistic image-feature detector','synthetic':True}
+ return {'metrics':metrics,'trace':trace,'terrain':w['height'],'obstacles':[list(c) for c in sorted(w['obstacles'])],'targets':[list(c) for c in sorted(w['targets'])],'footprint_m':footprint(),'cell_m':CELL,'model':'trained logistic image-feature detector' if model is not None else 'template fallback','synthetic':True}
