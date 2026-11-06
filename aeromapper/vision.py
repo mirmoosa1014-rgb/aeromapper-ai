@@ -2,6 +2,7 @@
 import math,random,json
 from pathlib import Path
 SIZE=12
+FEATURES=['bias','central_contrast','variance','bright_fraction','max_3x3_contrast']
 MODEL=Path(__file__).resolve().parents[1]/'models/detector.json'
 def patch(seed,target,family='train',size=2,noise=.08,visibility=1.):
  r=random.Random(seed);base={'train':.30,'validation':.36,'test':.42,'ood':.53}[family]
@@ -20,7 +21,7 @@ def sigmoid(x):return 1/(1+math.exp(-max(-30,min(30,x))))
 def load_model():
  try:
   model=json.loads(MODEL.read_text())
-  if len(model['weights'])!=5 or not all(math.isfinite(w) for w in model['weights']) or not math.isfinite(model.get('temperature',1)) or model.get('temperature',1)<=0:raise ValueError('Invalid model schema')
+  if model['feature_schema']!=FEATURES or len(model['weights'])!=5 or not all(math.isfinite(w) for w in model['weights']) or not math.isfinite(model.get('temperature',1)) or model.get('temperature',1)<=0:raise ValueError('Invalid model schema')
   return model
  except (OSError,ValueError,TypeError,KeyError):return None
 def predict(a,model=None):
