@@ -11,6 +11,8 @@ def cells_visible(pos,altitude=ALT):
  radius=footprint(altitude)/2
  return [(x,y) for y in range(N) for x in range(N) if abs((x-pos[0])*CELL)<=radius and abs((y-pos[1])*CELL)<=radius]
 def route(a,b,obstacles):
+ if any(len(p)!=2 or any(type(v) is not int or not 0<=v<N for v in p) for p in (a,b)):return None
+ if a in obstacles or b in obstacles:return None
  q=deque([a]);previous={a:None}
  while q:
   c=q.popleft()
