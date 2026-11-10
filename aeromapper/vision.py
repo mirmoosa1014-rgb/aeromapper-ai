@@ -21,6 +21,7 @@ def sigmoid(x):return 1/(1+math.exp(-max(-30,min(30,x))))
 def load_model():
  try:
   model=json.loads(MODEL.read_text())
+  if any(type(v) not in (int,float) for v in [*model['weights'],model.get('temperature',1)]):raise ValueError('Detector parameters must be numeric, not boolean')
   if model['feature_schema']!=FEATURES or len(model['weights'])!=5 or not all(math.isfinite(w) for w in model['weights']) or not math.isfinite(model.get('temperature',1)) or model.get('temperature',1)<=0:raise ValueError('Invalid model schema')
   return model
  except (OSError,ValueError,TypeError,KeyError):return None
